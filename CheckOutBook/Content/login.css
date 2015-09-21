@@ -1,0 +1,295 @@
+body {
+    background: #f4f4f4;
+    padding: 0;
+    margin: 0;
+}
+
+.logo {
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.hline { 
+    display: block;
+    border-style: inset;
+    width:100%;
+    vertical-align: middle;
+    height:2px;
+    color: rgb(221, 221, 221);
+}
+
+.instructions {
+    font-family:Arial;
+    font-weight:bold;
+    font-size: 10px;
+    text-align: center;
+    color: rgb(51,51,51);
+    padding:20px 0 20px 0; 
+}
+
+.completedinstructions {
+    font-family:Arial;
+    font-weight:bold;
+    font-size: 16px;
+    text-align: center;
+    color: rgb(102,102,102);
+    padding:20px 0 0 0;
+}
+.closeinstructions {
+    font-family:Arial;
+    font-weight:normal;
+    font-size: 16px;
+    text-align: center;
+    color: rgb(102,102,102);
+    padding:20px 0 20px 0;
+}
+
+.logout {
+    font-family:Arial;
+    font-weight:normal;
+    font-size: 16px;
+    text-decoration:underline;
+    cursor:pointer;
+    color: rgb(0,153, 204);
+}
+
+.textbox {
+    font-family:Arial;
+    font-weight:normal;
+    height: 36px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: rgb(136,136,136)
+}
+
+.btn:hover,
+.btn:focus,
+.btn.focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-green {
+    font-family:Arial;
+    font-size: 12px;
+    font-weight:bold;
+    color: rgb(255,255,255);
+    background-color: rgb(153,204,0);
+    /*border-color: #99cc00;
+    height: 36px;
+    padding: 5px 16px;*/
+}
+
+    .btn-green:focus,
+    .btn-green.focus {
+        background-color: #99cc00;
+        border-color: #99cc00;
+        color: #fff;
+    }
+
+    .btn-green:hover {
+        background-color: #99cc00;
+        border-color: #99cc00;
+        color: #fff;
+    }
+
+.btn-error {
+    font-family:Arial;
+    font-size: 12px;
+    font-weight:bold;
+    color: rgb(255,255,255);
+    background-color:rgb(153,0,0);
+}
+
+    .btn-error:focus,
+    .btn-error.focus {
+        background-color: #990000;
+        border-color: #990000;
+        color: #fff;
+    }
+
+    .btn-error:hover {
+        background-color: #990000;
+        border-color: #990000;
+        color: #fff;
+    }
+
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #666666;
+    text-align: center;
+    width: 100%;
+}
+
+.error-message {
+    font-family: Arial;
+    color: rgb(153,0,0);
+    font-size: 10px;
+    font-weight: bold;
+    padding:20px 0 20px 0;
+    text-align: center;
+}
+
+.welcome-message {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.welcome-message-small {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+/* ------------------------------------------
+    DROP DOWN LIST 
+--------------------------------------------*/
+
+.select {
+    width: 170px;
+    height: 38px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    color: #333333;
+    float:right;
+    padding: 0 10px;
+}
+
+
+/*-----  BOOTSTRAP DROP DOWN LIST CSS  -----*/
+.btn-default {
+    height: 36px;
+    width: 170px;
+    text-align: left;
+}
+
+}
+
+.btn-default:focus,
+.btn-default.focus {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn .caret {
+    margin-left: 0;
+    float: right;
+    margin-top: 8px;
+}
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+
+
+
+/*-----  KENDO DROP DOWN LIST CSS  -----*/
+
+.k-dropdown-wrap.k-state-default {
+    height: 34px;
+    background-color: #fff;
+    border-color: #ccc;
+    background-image: none;
+}
+
+.k-dropdown-wrap.k-state-hover .k-i-arrow-s   {  
+    background-position: 0 -30px;
+}
+
+.k-i-arrow-s {
+    background-position: 0 -30px;
+}
+
+.k-dropdown .k-input, .k-dropdown .k-state-focused .k-input {
+    text-align: left;
+    padding: 6px;
+}
+
+
+.k-list-container  {
+    border-color: #c5c5c5;
+    background-color: #fff;
+    padding: 4px 0px !important;
+}
+
+.k-list .k-state-selected
+{
+    border-color: #212db9;
+    background-color: #212db9;
+}
+
+.k-list .k-state-focused {
+    border-color: #717090;
+    background-color: #717090;
+}
+
+.k-list .k-state-hover, .k-list .k-state-focused, .k-list .k-state-highlight, .k-list .k-state-selected, .k-fieldselector .k-list .k-item, .k-list-optionlabel, .k-dropzone {
+    border-radius: 0px;
+}
+
+.login-spinner-hide {
+    display: none;
+}
+
+.login-spinner-show {
+    display: block;
+    position : absolute;
+    top:100%;
+    left:47%;
+    z-index:10;
+    -webkit-animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}
+

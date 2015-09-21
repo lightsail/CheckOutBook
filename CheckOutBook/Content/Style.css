@@ -1,0 +1,50 @@
+﻿body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+.accountName {
+    font-family:Arial;
+    font-weight:bold;
+    font-size: 12px; 
+    color: rgb(102,102,102);
+}
+
+.accountLogout {
+    font-family:Arial;
+    font-weight:bold;
+    text-decoration:underline;
+    font-size: 10px; 
+    color: rgb(0,153, 204);
+    padding-right : 20px;
+}
+
+.hline { 
+    display: block;
+    border-style: inset;
+    width:95%;
+    vertical-align: middle;
+    height:2px;
+    color: rgb(221, 221, 221);
+}
+
+.page-load-spinner-hide {
+    display: none;
+}
+
+.page-load-spinner-show {
+    display: block;
+    position : absolute;
+    top:84%;
+    left:45%;
+    z-index:10;
+    -webkit-animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}

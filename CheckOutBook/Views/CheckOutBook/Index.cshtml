@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+   
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>CheckOutBook</title>
+    <link href="~/Content/Style.css" rel="stylesheet" /> 
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+</head>
+<body >
+    <div id="CheckOutBookForm" style="position:relative">
+      <div id="dvMain" class="container"  >
+        <table style="width:100%;" >
+            <tr>
+                <td width="30%">
+                </td>
+                <td width="70%" style="text-align: right;">
+                    <div class="accountLogout" style="float: right;width: 70px;">
+                        @Html.ActionLink("LOG OUT","LogOff", "Login")
+                    </div>
+                </td>
+                <td style="width:0px;text-align: right;">
+                </td>
+            </tr>
+        </table>
+
+        <hr width="97%" size="2px" align="center" style="border-top: 1px solid rgb(221, 221, 221);">
+
+        <section class="row" data-bind="visible: PanelLogin">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="login-form">
+                    <br />
+                    <br />
+                    <br />
+                    <div id="dvInstructions" class="instructions" ></div>
+
+                    <select id="ddlSchool" class="form-control input-lg textbox" placeholder="Select School" onchange="schoolChanged(this)">Select School</select>
+                    
+                    <select id="ddlClass" class="form-control input-lg textbox" placeholder="Select Class" onchange="classChanged(this)">Select Class</select>
+                    
+                    <input id="bookId" class="form-control input-lg textbox" placeholder="Book Id" />
+                    
+                    <button id="btnCheckOut" onclick="javascript:qAViewModel.checkOutBookClicked()" class="btn btn-lg btn-block btn-green">Check Out Book</button>
+                    
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                    <div id="dvSpinnerPageLoad" class="page-load-spinner-show" >
+                        <img src="~/Images/spinner.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </section>
+
+        @*<table style="width:100%">
+            <br />
+            <tr>
+                <td>
+                    <div id="dvQuestionHeader" class="questionHeader" ></div>
+                </td>
+            </tr>
+            <tr style="height:100%;width:100%;">
+                <td width="75%">
+                    <div id="dvQuestion" class="questionText" style="margin-top: 10px;">
+                            <img id="imgQuestion" alt="" class="imageSetting" />
+                    </div>
+                    <br />
+                    <div id="dvStem" class="stemText" style="padding-bottom: 30px;">
+                    </div>
+                </td>
+                <td>
+                <hr class="vline"> </td>
+                <td width="100%" style="vertical-align: top;border-left: 1px solid rgb(221, 221, 221);float: left; position:relative">
+                    <div class="clozeOptionsHeader">
+                        SELECT A WORD
+                    </div>
+                    <div id="dvSpinnerAnswer" class="answer-spinner-hide">
+                        <img src="~/Images/loading.gif" />
+                    </div>
+                    <div id="dvAnswer">
+                    </div>
+                </td>
+            </tr>
+        </table>*@
+    </div>
+    </div>
+    
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/kendo.all.min.js"></script>
+    <script src="~/Scripts/ViewModels/CheckOutBook.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+﻿
+//MERGE STRINGS PLUGIN TO UNDERSCORE NAMESPACE
+_.mixin(_.str.exports());

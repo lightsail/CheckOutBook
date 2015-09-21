@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CheckOutBook Login</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="LoginForm" class="container" >
+        <section class="row" data-bind="visible: PanelLogin">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="login-form">
+                    <br />
+                    <br />
+                    <br />
+                  
+                    <div id="dvInstructions" class="instructions" >LOG IN TO BEGIN</div>
+
+                    <input data-bind="value: username" class="form-control input-lg textbox" placeholder="Username" />
+                    <input type="password" data-bind="value: password" class="form-control input-lg textbox" placeholder="Password" />
+                    <button id="BtnLogin" data-bind="click: LoginClick" class="btn btn-lg btn-block btn-green">Log In</button>
+                    <br />
+                    <div id="dvSpinnerLogin" class="login-spinner-hide" >
+                        <img src="~/Images/spinner.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </section>
+    </div>
+
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/kendo.all.min.js"></script>
+    <script src="~/Scripts/ViewModels/Login.js"></script>
+    <script src="/Scripts/underscore-min.js"></script>
+    <script src="/Scripts/underscore.string.min.js"></script>
+    <script src="/Scripts/underscore.string-mixin.js"></script>
+    <script src="~/Scripts/app.js"></script>
+</body>
+</html>
