@@ -1,10 +1,10 @@
 ﻿
 var viewModel = kendo.observable({
-    domain: "https://int.ls-api.com/",
+    domain: "https://prod.ls-api.com/",
     token_Prefix: "Bearer ",
     grant_type: 'password',     //The requested grant type. Should always be 'password'.
-    username: 'atul.gupta',//null,    
-    password: 'lightsail',//null,      
+    username: null,//null,    
+    password: null,//null,      
     access_token: null,	
     token_type: null,	
     userId: null,

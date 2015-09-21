@@ -284,6 +284,14 @@
     <Content Include="Scripts\underscore.string.min.js" />
     <Content Include="Scripts\ViewModels\Login.js" />
     <Content Include="Scripts\ViewModels\CheckOutBook.js" />
+    <Content Include="Scripts\ViewModels\Login_beta.js" />
+    <Content Include="Scripts\ViewModels\Login_demo.js" />
+    <Content Include="Scripts\ViewModels\Login_dev.js" />
+    <Content Include="Scripts\ViewModels\Login_int.js" />
+    <Content Include="Scripts\ViewModels\Login_perf.js" />
+    <Content Include="Scripts\ViewModels\Login_prod.js" />
+    <Content Include="Scripts\ViewModels\Login_qa.js" />
+    <Content Include="Scripts\ViewModels\Login_uat.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
