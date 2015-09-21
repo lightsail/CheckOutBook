@@ -45,7 +45,7 @@
                     
                     <select id="ddlClass" class="form-control input-lg textbox" placeholder="Select Class" onchange="classChanged(this)">Select Class</select>
                     
-                    <input id="bookId" class="form-control input-lg textbox" placeholder="Book Id" />
+                    <input id="bookId" class="form-control input-lg textbox" placeholder="Enter Book Id" />
                     
                     <button id="btnCheckOut" onclick="javascript:qAViewModel.checkOutBookClicked()" class="btn btn-lg btn-block btn-green">Check Out Book</button>
                     
@@ -58,40 +58,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
         </section>
-
-        @*<table style="width:100%">
-            <br />
-            <tr>
-                <td>
-                    <div id="dvQuestionHeader" class="questionHeader" ></div>
-                </td>
-            </tr>
-            <tr style="height:100%;width:100%;">
-                <td width="75%">
-                    <div id="dvQuestion" class="questionText" style="margin-top: 10px;">
-                            <img id="imgQuestion" alt="" class="imageSetting" />
-                    </div>
-                    <br />
-                    <div id="dvStem" class="stemText" style="padding-bottom: 30px;">
-                    </div>
-                </td>
-                <td>
-                <hr class="vline"> </td>
-                <td width="100%" style="vertical-align: top;border-left: 1px solid rgb(221, 221, 221);float: left; position:relative">
-                    <div class="clozeOptionsHeader">
-                        SELECT A WORD
-                    </div>
-                    <div id="dvSpinnerAnswer" class="answer-spinner-hide">
-                        <img src="~/Images/loading.gif" />
-                    </div>
-                    <div id="dvAnswer">
-                    </div>
-                </td>
-            </tr>
-        </table>*@
     </div>
+       
+    </div>
+    <div style="width:25%;position:relative;margin-left:38%;">
+        <table id="tblStudents" class="TFtable" ></table>
     </div>
     
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>

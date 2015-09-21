@@ -3,30 +3,12 @@ var viewModel = kendo.observable({
     domain: "http://int.ls-api.com/",
     token_Prefix: "Bearer ",
     grant_type: 'password',     //The requested grant type. Should always be 'password'.
-    username: 'atul.gupta',//null,    //'12813',//'12151',//'12813',//'aregress', //'nsmith'      
+    username: 'atul.gupta',//null,    
     password: 'lightsail',//null,      
     access_token: null,	
     token_type: null,	
     userId: null,
-    firstName : null,
-    lastName : null,
-    userGroupId : null,         
-    expires_in: null,
-    userTypeId: null,
-    accountName : null,
-    objectId: null,	
-    passwordChangeRequired: null,
-    IssuedGuid: null,
-    studentPlacementTestId: null,
-    studentPlacementTestHasTakenStatus: null,
     authorization_token : null,
-    startingPlacementTestId : null,
-    finishingPlacementTestId : null,
-    startDateTime: null,
-    placementTestQuestions: null,
-    studentPlacementTestStatus : null,
-    placementTestQuestionId : null,
-    answerText: null,
     ErrorMessage: null,
     IsErrorMessage: true, 
     PanelLogin: true,
@@ -82,22 +64,13 @@ var viewModel = kendo.observable({
                 if (result) {
                     viewModel.access_token = result.access_token,
                     viewModel.token_type = result.token_type,
-                    viewModel.expires_in = result.expires_in,
                     viewModel.username = result.username,
                     viewModel.userId = result.userId,
-                    viewModel.userTypeId = result.userTypeId,
-                    viewModel.objectId = result.objectId,
-                    viewModel.passwordChangeRequired = result.passwordChangeRequired,
-                    viewModel.IssuedGuid = result.IssuedGuid
                     viewModel.authorization_token = viewModel.token_Prefix + viewModel.access_token;
-                    
                     viewModel.loadQAPage();
-                    //viewModel.getUserName();
-                    //viewModel.getStudentClass();
                 }
             },
             error: function (err) {
-                debugger;
                 if ((err.responseJSON.error == "invalid_grant" && err.responseJSON.error_description == "Incorrect username or password. Please try again.")) {
                     viewModel.ErrorMessage = "User is not authenticated";
                     $("#dvInstructions").removeClass("instructions").addClass("error-message").text(viewModel.ErrorMessage);

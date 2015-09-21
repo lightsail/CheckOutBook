@@ -1,7 +1,14 @@
 ﻿
+var sess_pollInterval = 60000;
+var sess_expirationMinutes = 10;  // Log Out after minutes.
+var sess_warningMinutes = 1;
+var sess_intervalID;
+var sess_lastActivity;
+
 qAViewModel = {
     ErrorMessage: null,
     IsErrorMessage: true,
+    bookCheckOutCount : 0,
 
     getApiUrl: function (apiURL) {
         return sessionStorage.getItem("domain") + apiURL;
@@ -75,7 +82,13 @@ qAViewModel = {
             async: false,
             success: function (result) {
                 if (result) {
-                    sessionStorage.setItem("Students",JSON.stringify(result));
+                    sessionStorage.setItem("Students", JSON.stringify(result));
+                    $("#tblStudents").find('tr').remove();
+                   
+                    $("#tblStudents").append("<tr><td><b>S. No.</b></td><td><b>Student Name</b></td></tr>");
+                    for (var i = 0; i < result.length; i++) {
+                        $("#tblStudents").append("<tr><td>" + parseInt(parseInt(i) + 1) + "</td><td>" + result[i].lastName + " , " + result[i].firstName + "</td></tr>");
+                    }
                 }
             },
             error: function (err) {
@@ -114,8 +127,9 @@ qAViewModel = {
         for (var i = 0; i < students.length; i++) {
             qAViewModel.checkOutBook(students[i].userId, userGroupId);
         }
-        debugger;
+        //debugger;
         hideSpinner();
+        alert(qAViewModel.bookCheckOutCount + ' Books Checked Out Successfully.')
     },
 
     checkOutBook: function (userId, userGroupId) {
@@ -143,9 +157,11 @@ qAViewModel = {
                 debugger;
                 if (result) {
                     debugger;
+                    qAViewModel.bookCheckOutCount = parseInt(parseInt(qAViewModel.bookCheckOutCount) + 1);
                 }
             },
             error: function (err) {
+                //qAViewModel.bookCheckOutCount = parseInt(parseInt(qAViewModel.bookCheckOutCount) + 1);
                 debugger;
             }
         });
@@ -159,7 +175,7 @@ function schoolChanged(e) {
     $("#dvInstructions").hide();
     sessionStorage.setItem("schoolId", e.value);
     sessionStorage.setItem("classId", null);
-    $("#ddlClass").find('option').remove()
+    $("#ddlClass").find('option').remove();
     qAViewModel.getClasses(e.value);
     hideSpinner();
 }
@@ -169,7 +185,7 @@ function classChanged(e) {
     $("#dvInstructions").removeClass("error-message").addClass("instructions");
     $("#btnCheckOut").removeClass("btn-error").addClass("btn-green");
     $("#dvInstructions").hide();
-    //debugger;
+
     var res = e.value.split(",");
     sessionStorage.setItem("classId", res[0]);
     sessionStorage.setItem("userGroupId", res[1]);
@@ -182,7 +198,47 @@ $(document).ready(function () {
     showSpinner();
     qAViewModel.getSchools();
     hideSpinner();
+
+    initSession();
+    $(document).bind('keypress.session', function (ed, e) {
+        initSession();
+    });
+
+    $(document).mousemove(function (event) {
+        initSession();
+    });
 })
+
+// functions for Log Out on inactivity for certain time
+function initSession() {
+    sess_lastActivity = new Date();
+    sessSetInterval();
+}
+
+function sessSetInterval() {
+    sess_intervalID = setInterval('sessInterval()', sess_pollInterval);
+}
+
+function sessKeyPressed() {
+    sess_lastActivity = new Date();
+}
+
+function sessInterval() {
+    var now = new Date();
+    //get milliseconds of differneces
+    var diff = now - sess_lastActivity;
+    //get minutes between differences
+    var diffMins = (diff / 1000 / 60);
+    if (diffMins >= sess_expirationMinutes) {
+        sessLogOut();
+    }
+}
+
+function sessLogOut() {
+    window.location.href = "/Login/LogOff";
+}
+
+// Log out functions end here
 
 function showSpinner() {
     $('#dvSpinnerPageLoad').removeClass('page-load-spinner-hide').addClass('page-load-spinner-show');
