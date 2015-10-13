@@ -8,13 +8,15 @@ var sess_lastActivity;
 qAViewModel = {
     ErrorMessage: null,
     IsErrorMessage: true,
-    bookCheckOutCount : 0,
+    bookCheckOutCount: 0,
 
-    getApiUrl: function (apiURL) {
+    getApiUrl: function (apiURL)
+    {
         return sessionStorage.getItem("domain") + apiURL;
     },
 
-    getSchools: function () {
+    getSchools: function ()
+    {
         var authorization_token = sessionStorage.getItem("authorization_token");
         var url = "api/Schools";
         url = qAViewModel.getApiUrl(url);
@@ -26,25 +28,30 @@ qAViewModel = {
             dataType: 'json',
             contentType: 'application/json',
             async: false,
-            success: function (result) {
-                if (result) {
+            success: function (result)
+            {
+                if (result)
+                {
                     $("#ddlSchool").append("<option value='0' disabled selected>Select School</option>");
-                    for (var i = 0; i < result.length; i++) {
+                    for (var i = 0; i < result.length; i++)
+                    {
                         $("#ddlSchool").append("<option value='" + result[i].schoolId + "'>" + result[i].userGroupOrganizationName + "</option>");
                     }
                 }
             },
-            error: function (err) {
+            error: function (err)
+            {
             }
         });
     },
 
-    getClasses: function (schoolId) {
+    getClasses: function (schoolId)
+    {
         var authorization_token = sessionStorage.getItem("authorization_token");
         var url = "api/Schools/" + schoolId + "/Classes/";
 
         url = qAViewModel.getApiUrl(url);
-        
+
         $.ajax({
             type: 'GET',
             url: url,
@@ -52,27 +59,32 @@ qAViewModel = {
             dataType: 'json',
             contentType: 'application/json',
             async: false,
-            success: function (result) {
-                if (result) {
+            success: function (result)
+            {
+                if (result)
+                {
                     $("#ddlClass").append("<option value='0' disabled selected>Select Class</option>");
 
-                    for (var i = 0; i < result.length; i++) {
+                    for (var i = 0; i < result.length; i++)
+                    {
                         $("#ddlClass").append("<option value='" + result[i].classId + ',' + result[i].userGroupId + "'>" + result[i].name + "</option>");
                     }
                 }
             },
-            error: function (err) {
+            error: function (err)
+            {
             }
         });
     },
 
-    getStudents: function () {
+    getStudents: function ()
+    {
         var classId = sessionStorage.getItem("classId");
         var authorization_token = sessionStorage.getItem("authorization_token");
         var url = "api/Classes/" + classId + "/Students/";
 
         url = qAViewModel.getApiUrl(url);
-        
+
         $.ajax({
             type: 'GET',
             url: url,
@@ -80,39 +92,48 @@ qAViewModel = {
             dataType: 'json',
             contentType: 'application/json',
             async: false,
-            success: function (result) {
-                if (result) {
+            success: function (result)
+            {
+                if (result)
+                {
                     sessionStorage.setItem("Students", JSON.stringify(result));
                     $("#tblStudents").find('tr').remove();
-                   
+
                     $("#tblStudents").append("<tr><td><b>S. No.</b></td><td><b>Student Name</b></td></tr>");
-                    for (var i = 0; i < result.length; i++) {
+                    for (var i = 0; i < result.length; i++)
+                    {
                         $("#tblStudents").append("<tr><td>" + parseInt(parseInt(i) + 1) + "</td><td>" + result[i].lastName + " , " + result[i].firstName + "</td></tr>");
                     }
                 }
             },
-            error: function (err) {
+            error: function (err)
+            {
             }
         });
     },
-    
-    checkOutBookClicked: function (e) {
+
+    checkOutBookClicked: function (e)
+    {
         var flag = false;
 
-        if (sessionStorage.getItem("schoolId") == null) {
-            qAViewModel.ErrorMessage ="Please select school";
+        if (sessionStorage.getItem("schoolId") == null)
+        {
+            qAViewModel.ErrorMessage = "Please select school";
             flag = true;
         }
-        else if (sessionStorage.getItem("classId") == null || sessionStorage.getItem("classId") == "null") {
+        else if (sessionStorage.getItem("classId") == null || sessionStorage.getItem("classId") == "null")
+        {
             qAViewModel.ErrorMessage = "Please select class";
             flag = true;
         }
-        else if ($('#bookId').val() == "") {
+        else if ($('#bookId').val() == "")
+        {
             qAViewModel.ErrorMessage = "Please enter Book Id";
             flag = true;
         }
 
-        if (flag) {
+        if (flag)
+        {
             qAViewModel.IsErrorMessage = true;
             $("#dvInstructions").show();
             $("#dvInstructions").removeClass("instructions").addClass("error-message").text(qAViewModel.ErrorMessage);
@@ -121,23 +142,26 @@ qAViewModel = {
         }
 
         showSpinner();
+        qAViewModel.bookCheckOutCount = 0;
+        qAViewModel.bookCheckOutFailCount = 0;
         var students = JSON.parse(sessionStorage.getItem("Students"));
         var userGroupId = sessionStorage.getItem("userGroupId");
-        //debugger;
-        for (var i = 0; i < students.length; i++) {
+        for (var i = 0; i < students.length; i++)
+        {
             qAViewModel.checkOutBook(students[i].userId, userGroupId);
         }
-        //debugger;
+
         hideSpinner();
-        alert(qAViewModel.bookCheckOutCount + ' Books Checked Out Successfully.')
+        alert("Book checkout completed for " + students.length + " students. " + qAViewModel.bookCheckOutCount + " succeeded and " + qAViewModel.bookCheckOutFailCount + " failed.");
     },
 
-    checkOutBook: function (userId, userGroupId) {
+    checkOutBook: function (userId, userGroupId)
+    {
         var authorization_token = sessionStorage.getItem("authorization_token");
         var url = "api/Users/" + userId + "/CheckOut";
 
         url = qAViewModel.getApiUrl(url);
-        debugger;
+
         var data =
                 {
                     UserGroupId: userGroupId,
@@ -151,24 +175,26 @@ qAViewModel = {
             headers: { 'Authorization': authorization_token },
             dataType: 'json',
             async: false,
-            data : data,
+            data: data,
             contentType: 'application/x-www-form-urlencoded',
-            success: function (result) {
-                debugger;
+            success: function (result)
+            {
                 if (result) {
-                    debugger;
                     qAViewModel.bookCheckOutCount = parseInt(parseInt(qAViewModel.bookCheckOutCount) + 1);
+                } else {
+                    qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
                 }
             },
-            error: function (err) {
-                //qAViewModel.bookCheckOutCount = parseInt(parseInt(qAViewModel.bookCheckOutCount) + 1);
-                debugger;
+            error: function (err)
+            {
+                qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
             }
         });
-    },
+    }
 };
 
-function schoolChanged(e) {
+function schoolChanged(e)
+{
     showSpinner();
     $("#dvInstructions").removeClass("error-message").addClass("instructions");
     $("#btnCheckOut").removeClass("btn-error").addClass("btn-green");
@@ -180,7 +206,8 @@ function schoolChanged(e) {
     hideSpinner();
 }
 
-function classChanged(e) {
+function classChanged(e)
+{
     showSpinner();
     $("#dvInstructions").removeClass("error-message").addClass("instructions");
     $("#btnCheckOut").removeClass("btn-error").addClass("btn-green");
@@ -194,56 +221,67 @@ function classChanged(e) {
     hideSpinner();
 }
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
     showSpinner();
     qAViewModel.getSchools();
     hideSpinner();
 
     initSession();
-    $(document).bind('keypress.session', function (ed, e) {
+    $(document).bind('keypress.session', function (ed, e)
+    {
         initSession();
     });
 
-    $(document).mousemove(function (event) {
+    $(document).mousemove(function (event)
+    {
         initSession();
     });
-})
+});
 
 // functions for Log Out on inactivity for certain time
-function initSession() {
+function initSession()
+{
     sess_lastActivity = new Date();
     sessSetInterval();
 }
 
-function sessSetInterval() {
+function sessSetInterval()
+{
     sess_intervalID = setInterval('sessInterval()', sess_pollInterval);
 }
 
-function sessKeyPressed() {
+function sessKeyPressed()
+{
     sess_lastActivity = new Date();
 }
 
-function sessInterval() {
+function sessInterval()
+{
     var now = new Date();
     //get milliseconds of differneces
     var diff = now - sess_lastActivity;
     //get minutes between differences
     var diffMins = (diff / 1000 / 60);
-    if (diffMins >= sess_expirationMinutes) {
+    if (diffMins >= sess_expirationMinutes)
+    {
         sessLogOut();
     }
 }
 
-function sessLogOut() {
+function sessLogOut()
+{
     window.location.href = "/Login/LogOff";
 }
 
 // Log out functions end here
 
-function showSpinner() {
+function showSpinner()
+{
     $('#dvSpinnerPageLoad').removeClass('page-load-spinner-hide').addClass('page-load-spinner-show');
 }
 
-function hideSpinner() {
+function hideSpinner()
+{
     $('#dvSpinnerPageLoad').removeClass('page-load-spinner-show').addClass('page-load-spinner-hide');
 }
