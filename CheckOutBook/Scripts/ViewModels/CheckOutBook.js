@@ -74,11 +74,17 @@ qAViewModel = {
             {
                 if (result)
                 {
+                    var sortedClasses = result.sort(function (a, b)
+                    {
+                        if (a.name < b.name) return -1;
+                        return 1;
+                    });
+
                     $("#ddlClass").append("<option value='0' disabled selected>Select Class</option>");
 
-                    for (var i = 0; i < result.length; i++)
+                    for (var i = 0; i < sortedClasses.length; i++)
                     {
-                        $("#ddlClass").append("<option value='" + result[i].classId + ',' + result[i].userGroupId + "'>" + result[i].name + "</option>");
+                        $("#ddlClass").append("<option value='" + sortedClasses[i].classId + ',' + sortedClasses[i].userGroupId + "'>" + sortedClasses[i].name + "</option>");
                     }
                 }
             },
@@ -107,13 +113,19 @@ qAViewModel = {
             {
                 if (result)
                 {
+                    var sortedStudents = result.sort(function (a, b)
+                    {
+                        if ((a.lastName + a.firstName) < (b.lastName + b.firstName)) return -1;
+                        return 1;
+                    });
+
                     sessionStorage.setItem("Students", JSON.stringify(result));
                     $("#tblStudents").find('tr').remove();
 
                     $("#tblStudents").append("<tr><td><b>S. No.</b></td><td><b>Student Name</b></td></tr>");
-                    for (var i = 0; i < result.length; i++)
+                    for (var i = 0; i < sortedStudents.length; i++)
                     {
-                        $("#tblStudents").append("<tr><td>" + parseInt(parseInt(i) + 1) + "</td><td>" + result[i].lastName + " , " + result[i].firstName + "</td></tr>");
+                        $("#tblStudents").append("<tr><td>" + parseInt(parseInt(i) + 1) + "</td><td>" + sortedStudents[i].lastName + " , " + sortedStudents[i].firstName + "</td></tr>");
                     }
                 }
             },
