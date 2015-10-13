@@ -4,11 +4,17 @@ var sess_expirationMinutes = 10;  // Log Out after minutes.
 var sess_warningMinutes = 1;
 var sess_intervalID;
 var sess_lastActivity;
+var maxRetries = 3;
+
+function logToConsole(message) {
+    if (console) console.log(message);
+}
 
 qAViewModel = {
     ErrorMessage: null,
     IsErrorMessage: true,
     bookCheckOutCount: 0,
+    bookCheckOutFailCount: 0,
 
     getApiUrl: function (apiURL)
     {
@@ -28,14 +34,19 @@ qAViewModel = {
             dataType: 'json',
             contentType: 'application/json',
             async: false,
-            success: function (result)
-            {
+            success: function (result) {
                 if (result)
                 {
-                    $("#ddlSchool").append("<option value='0' disabled selected>Select School</option>");
-                    for (var i = 0; i < result.length; i++)
+                    var sortedSchools = result.sort(function (a, b)
                     {
-                        $("#ddlSchool").append("<option value='" + result[i].schoolId + "'>" + result[i].userGroupOrganizationName + "</option>");
+                        if (a.userGroupOrganizationName < b.userGroupOrganizationName) return -1;
+                        return 1;
+                    });
+
+                    $("#ddlSchool").append("<option value='0' disabled selected>Select School</option>");
+                    for (var i = 0; i < sortedSchools.length; i++)
+                    {
+                        $("#ddlSchool").append("<option value='" + sortedSchools[i].schoolId + "'>" + sortedSchools[i].userGroupOrganizationName + "</option>");
                     }
                 }
             },
@@ -148,24 +159,26 @@ qAViewModel = {
         var userGroupId = sessionStorage.getItem("userGroupId");
         for (var i = 0; i < students.length; i++)
         {
-            qAViewModel.checkOutBook(students[i].userId, userGroupId);
+            qAViewModel.checkOutBook(students[i].userId, userGroupId, 0);
         }
 
         hideSpinner();
         alert("Book checkout completed for " + students.length + " students. " + qAViewModel.bookCheckOutCount + " succeeded and " + qAViewModel.bookCheckOutFailCount + " failed.");
     },
 
-    checkOutBook: function (userId, userGroupId)
+    checkOutBook: function (userId, userGroupId, retryNumber)
     {
         var authorization_token = sessionStorage.getItem("authorization_token");
         var url = "api/Users/" + userId + "/CheckOut";
 
         url = qAViewModel.getApiUrl(url);
 
+        var bookId = $('#bookId').val();
+
         var data =
                 {
                     UserGroupId: userGroupId,
-                    BookId: $('#bookId').val(),
+                    BookId: bookId,
                     BookTagId: null
                 };
 
@@ -179,15 +192,34 @@ qAViewModel = {
             contentType: 'application/x-www-form-urlencoded',
             success: function (result)
             {
-                if (result) {
+                if (result)
+                {
+                    logToConsole("Checked out book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + ").");
                     qAViewModel.bookCheckOutCount = parseInt(parseInt(qAViewModel.bookCheckOutCount) + 1);
-                } else {
-                    qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
+                }
+                else
+                {
+                    if (retryNumber < maxRetries) {
+                        logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retrying - " + retryNumber + 1 + " of " + maxRetries);
+                        checkOutBook(userId, userGroupId, retryNumber + 1);
+                    } else
+                    {
+                        logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retry limit reached.");
+                        qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
+                    }
                 }
             },
             error: function (err)
             {
-                qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
+                if (retryNumber < maxRetries)
+                {
+                    logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retrying - " + retryNumber + 1 + " of " + maxRetries);
+                    checkOutBook(userId, userGroupId, retryNumber + 1);
+                } else
+                {
+                    logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retry limit reached.");
+                    qAViewModel.bookCheckOutFailCount = parseInt(parseInt(qAViewModel.bookCheckOutFailCount) + 1);
+                }
             }
         });
     }
