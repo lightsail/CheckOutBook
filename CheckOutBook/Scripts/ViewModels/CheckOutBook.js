@@ -213,7 +213,7 @@ qAViewModel = {
                 {
                     if (retryNumber < maxRetries) {
                         logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retrying - " + retryNumber + 1 + " of " + maxRetries);
-                        checkOutBook(userId, userGroupId, retryNumber + 1);
+                        qAViewModel.checkOutBook(userId, userGroupId, retryNumber + 1);
                     } else
                     {
                         logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retry limit reached.");
@@ -226,7 +226,7 @@ qAViewModel = {
                 if (retryNumber < maxRetries)
                 {
                     logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retrying - " + retryNumber + 1 + " of " + maxRetries);
-                    checkOutBook(userId, userGroupId, retryNumber + 1);
+                    qAViewModel.checkOutBook(userId, userGroupId, retryNumber + 1);
                 } else
                 {
                     logToConsole("Checkout failed for book(" + bookId + ") for user(" + userId + ") in user group(" + userGroupId + "). Retry limit reached.");
